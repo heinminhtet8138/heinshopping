@@ -24,6 +24,10 @@ class ItemController extends Controller
         return view('items.item_category', compact('itemCategories'));
     }
 
+    public function itemCart(){
+        return view('items.item_carts');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

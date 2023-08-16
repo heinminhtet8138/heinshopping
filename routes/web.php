@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Route::resource('items', App\Http\Controllers\ItemController::class);
 Route::get('items/categories/{id}', [App\Http\Controllers\ItemController::class, 'itemCategory'])->name('item_category');
+Route::get('carts', [App\Http\Controllers\ItemController::class, 'itemCart'])->name('item_cart');
 
 Auth::routes();
 

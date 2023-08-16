@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     itemCount();
     $(".product_actions").on('click','.addToCart',function(){
         // alert("Hello Alert");
