@@ -15,11 +15,11 @@
             </div>
         </header>
         <!-- Category section -->
-        <!-- <section class="py-5">
+        <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     @foreach($categories as $category)
-                        <a class="col mb-5" href="">
+                        <a class="col mb-5" href="{{route('item_category',$category->id)}}">
                             <div class="card text-bg-dark">
                                 <img src="{{$category->photo}}" class="card-img" alt="...">
                                 <div class="card-img-overlay">
@@ -30,7 +30,7 @@
                     @endforeach
                 </div>
             </div>
-        </section> -->
+        </section>
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">

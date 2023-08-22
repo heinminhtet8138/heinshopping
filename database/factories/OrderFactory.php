@@ -21,9 +21,9 @@ class OrderFactory extends Factory
             'qty' => rand(1,10),
             'total' => $this->faker->numberBetween(50000, 500000),
             'paymentSlip' => $this->faker->imageUrl,
-            'paymentID' => rand(1,10),
-            'itemID' => rand(1,10),
-            'userID' => rand(1,10),
+            'payment_id' => rand(1,10),
+            'item_id' => rand(1,10),
+            'user_id' => rand(1,10),
         ];
     }
 }

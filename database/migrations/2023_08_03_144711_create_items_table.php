@@ -20,8 +20,8 @@ return new class extends Migration
             $table->longText('description');
             $table->string('discount');
             $table->boolean('inStock');
-            $table->unsignedBigInteger('categoryID');
-            $table->foreign('categoryID')
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')
                     ->references('id')
                     ->on('categories')
                     ->onDelete('cascade');

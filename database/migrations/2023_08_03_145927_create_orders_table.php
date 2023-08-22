@@ -17,18 +17,18 @@ return new class extends Migration
             $table->string('qty');
             $table->string('total');
             $table->string('paymentSlip');
-            $table->unsignedBigInteger('paymentID');
-            $table->foreign('paymentID')
+            $table->unsignedBigInteger('payment_id');
+            $table->foreign('payment_id')
                     ->references('id')
                     ->on('payments')
                     ->onDelete('cascade');
-            $table->unsignedBigInteger('itemID');
-            $table->foreign('itemID')
+            $table->unsignedBigInteger('item_id');
+            $table->foreign('item_id')
                     ->references('id')
                     ->on('items')
                     ->onDelete('cascade');
-            $table->unsignedBigInteger('userID');
-            $table->foreign('userID')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
                     ->references('id')
                     ->on('users')
                     ->onDelete('cascade');

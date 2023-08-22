@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
@@ -13,19 +14,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        $items = Item::all();
-        return view('items.index', compact('items','categories'));
-    }
-
-    // Filter items with category id
-    public function itemCategory(string $category_id){
-        $itemCategories = Item::where('category_id',$category_id)->get();
-        return view('items.item_category', compact('itemCategories'));
-    }
-
-    public function itemCart(){
-        return view('items.item_carts');
+        $items = Item::paginate('10');
+        return view('admin.items.index', compact('items'));
     }
 
     /**
@@ -33,7 +23,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.items.create', compact('categories'));
     }
 
     /**
@@ -41,7 +32,21 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $items = Item::create($request->all());
+
+        //image upload
+        $fileName = time().'.'.$request->image->extension();
+
+        $upload = $request->image->move(public_path('images/'), $fileName);
+        
+        if($upload){
+            $items->image = "/images/".$fileName;
+        }
+
+        $items->save();
+
+        return redirect()->route('items.index');
     }
 
     /**
@@ -49,13 +54,7 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        // dd($id);
-        $item = Item::find($id);
-        $item_categoryID = $item->category_id;
-        // dd($item_categoryID);
-        $item_categories = Item::where('category_id',$item_categoryID)->orderBy('id','DESC')->limit(4)->get();
-        // dd($item_categories);
-        return view('items.detail', compact('item','item_categories'));
+        //
     }
 
     /**
