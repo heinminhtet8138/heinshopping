@@ -10,14 +10,16 @@
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css
+">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+        <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
         <link rel="stylesheet" href="{{asset('front/css/img_hover.css')}}">
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="#!">ဈေးဗန်း</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -41,13 +43,30 @@
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill" id="itemCount">0</span>
                         </a>
+                    
+                        @if(Auth::user())
+                            <div class="collapse navbar-collapse d-inline" id="navbarNavDarkDropdown">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{Auth::user()->name}}</a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="#!">Profile</a></li>
+                                        <li><a class="dropdown-item" href="">Logout</a></li>
+                                    </ul>
+                                </li>
+                                </ul>
+                            </div>
+                        @else
+                            <a href="/login" class="btn mx-3">Login</a>
+                            <a href="/register" class="btn btn-outline-danger">Register</a>
+                        @endif
                     </form>
                 </div>
             </div>
         </nav>
             @yield('content');
         <!-- Footer-->
-        <footer class="py-5 bg-dark">
+        <footer class="py-5 bg-dark fixed-bottom">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
         </footer>
         <!-- Bootstrap core JS-->

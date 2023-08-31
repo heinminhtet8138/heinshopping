@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.front-end')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -60,6 +60,8 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+
+                        <input type="hidden" name="role" value="User">
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
