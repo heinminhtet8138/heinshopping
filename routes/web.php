@@ -25,6 +25,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('orders', [App\Http\Controllers\ItemController::class, 'orderNow'])->name('orderNow');
+
 // Route::resource('users',App\Http\Controllers\UserController::class)->middleware('auth');
 
 

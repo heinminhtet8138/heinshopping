@@ -19,7 +19,16 @@
                 </tbody>
             </table>
         </div>
+        <div class="d-grid gap-2 mb-5 pb-5">
+            @guest
+                <a href="/login" class="btn btn-primary" type="button">Login</a>
+            @else
+                <button class="btn btn-success" type="button" id="orderNow">Order Now</button>
+
+            @endguest
+        </div>
     </div>
+    <div class="my-5 py-5"></div>
 @endsection
 @section('script')
     <script>
@@ -46,6 +55,20 @@
                 </tr>`;
             $('#cartTbody').html(data);
         }
-    
+
+        $('#orderNow').click(function(){
+            let itemString = localStorage.getItem('heinShop_items');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.post("{{route('orderNow')}}",{data:itemString},function(respond){
+                console.log(respond);
+            })
+
+        })    
     </script>
 @endsection
