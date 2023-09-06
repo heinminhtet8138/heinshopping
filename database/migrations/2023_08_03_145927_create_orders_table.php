@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('voucherNo');
             $table->string('qty');
             $table->string('total');
+            $table->string('status');
             $table->string('paymentSlip');
             $table->unsignedBigInteger('payment_id');
             $table->foreign('payment_id')

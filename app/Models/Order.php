@@ -15,6 +15,7 @@ class Order extends Model
         'voucherNo',
         'qty',
         'total',
+        'status',
         'paymentSlip',
         'paymet_id',
         'item_id',

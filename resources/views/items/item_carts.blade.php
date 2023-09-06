@@ -23,12 +23,52 @@
             @guest
                 <a href="/login" class="btn btn-primary" type="button">Login</a>
             @else
-                <button class="btn btn-success" type="button" id="orderNow">Order Now</button>
+                <!-- <button class="btn btn-success" type="button" id="orderNow">Order Now</button> -->
+                <form class="row" id="paymentForm" action="" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-md-6">
+                        <label for="paymentSlip">Payment Slip</label>
+                        <input type="file" class="form-control" name="paymentSlip" id="paymentSlip" accept="image/*">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select class="form-select" name="paymentMethod">
+                            <option value="">Choose Payment Method</option>
+                            @foreach($payments as $payment)
+                                <option value="{{$payment->id}}">{{$payment->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-success mt-5" type="submit" id="orderNow">Order Now</button>
+
+                </form>
 
             @endguest
         </div>
     </div>
     <div class="my-5 py-5"></div>
+
+    <!-- Success Model -->
+    <div class="modal fade" id="orderSuccessModal" tabindex="-1" aria-labelledby="orderSuccessModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="orderSuccessModalLabel">Item Order Success</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+                <p class="text-success fs-1"><i class="bi bi-check-circle-fill"></i></p>
+                <p>Your order is successful!</p>
+            </div>          
+        </div>
+        <div class="modal-footer">
+            <a href="/" class="btn btn-primary">Ok</a>
+        </div>
+        </div>
+    </div>
+    </div>
 @endsection
 @section('script')
     <script>
@@ -56,19 +96,61 @@
             $('#cartTbody').html(data);
         }
 
-        $('#orderNow').click(function(){
-            let itemString = localStorage.getItem('heinShop_items');
+        // $('#orderNow').click(function(){
+        //     let itemString = localStorage.getItem('heinShop_items');
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        //     $.ajaxSetup({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });
 
-            $.post("{{route('orderNow')}}",{data:itemString},function(respond){
-                console.log(respond);
+        //     $.post("{{route('orderNow')}}",{data:itemString},function(respond){
+        //         console.log(respond);
+        //     })
+
+        // })    
+
+        $(document).ready(function(){
+
+            $('#paymentForm').on('submit',function(e){
+                e.preventDefault();
+                let formData = new FormData(this);
+                // console.log($formData);
+                let itemString = localStorage.getItem('heinShop_items');
+                formData.append('orderItems',itemString);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('orderNow')}}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        // console.log(response);
+                        if(response){
+                            $('#orderSuccessModal').modal('show');
+                            localStorage.clear();
+
+
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        console.log(xhr.responseText);
+                    }
+                })
+
+
+                
+
             })
 
-        })    
+        })
     </script>
 @endsection

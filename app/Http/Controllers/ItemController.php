@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
@@ -27,24 +28,33 @@ class ItemController extends Controller
     }
 
     public function itemCart(){
-        return view('items.item_carts');
+        $payments = Payment::all();
+        return view('items.item_carts',compact('payments'));
     }
 
     public function orderNow(Request $request){
         // dd($request);
-        $dataArr = json_decode($request->data);
+        $dataArr = json_decode($request->input('orderItems'));
         // var_dump($dataArr);
         $date = date('Y-m-d h:i:s');
         $voucherNo = strtotime($date);
         // echo $voucherNo;
 
+        //image upload
+        $image = $request->file('paymentSlip');
+        $fileName = time().'.'.$image->extension();
+
+        $image->move(public_path('paymentSlip/'), $fileName);
+
+        //Status = user က order တင်လိုက်ပြီဆိုရင် pending, Accept လုက်လိုက်ရင် Order, နောက်ဆုံး Status က Delivery
         foreach ($dataArr as $key => $data) {
             $order = new Order();
             $order->voucherNo = $voucherNo;
             $order->qty = $data->qty;
             $order->total = $data->qty * ($data->price - (($data->discount/100) * $data->price));
-            $order->paymentSlip = '/images/slip.png';
-            $order->payment_id = 1;
+            $order->status = 'Pending';
+            $order->paymentSlip = "/paymentSlip/".$fileName;
+            $order->payment_id = $request->input('paymentMethod');
             $order->item_id = $data->id;
             $order->user_id = Auth::id();
             $order->save();
