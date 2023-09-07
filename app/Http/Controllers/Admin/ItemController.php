@@ -8,10 +8,22 @@ use App\Models\Item;
 use App\Models\Category;
 use App\Http\Requests\ItemRequest;
 use App\Http\Requests\ItemUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class ItemController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(function($request, $next){
+            
+            if(in_array(Auth::user()->role, ['Super Admin','Admin'])){
+                return $next($request);
+            }else{
+                return back();
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      */

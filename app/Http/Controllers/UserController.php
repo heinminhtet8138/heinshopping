@@ -6,9 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
+    public function __construct(){
+        $this->middleware(function($request, $next){
+            
+            if(in_array(Auth::user()->role, ['Super Admin'])){
+                return $next($request);
+            }else{
+                return back();
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      */

@@ -39,7 +39,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <div class="d-flex">
                         <a href="{{route('item_cart')}}" class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
@@ -53,7 +53,17 @@
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{Auth::user()->name}}</a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <li><a class="dropdown-item" href="#!">Profile</a></li>
-                                        <li><a class="dropdown-item" href="">Logout</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                            </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                        </li>
                                     </ul>
                                 </li>
                                 </ul>
@@ -62,7 +72,7 @@
                             <a href="/login" class="btn mx-3">Login</a>
                             <a href="/register" class="btn btn-outline-danger">Register</a>
                         @endif
-                    </form>
+</div>
                 </div>
             </div>
         </nav>

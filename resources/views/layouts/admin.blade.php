@@ -52,10 +52,16 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Items
                             </a>
+                            <a class="nav-link" href="{{route('backend.orders.index',['status' => 'Pending'])}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Orders
+                            </a>
+                            @if(Auth::user()->role == 'Super Admin')
                             <a class="nav-link" href="{{route('backend.users.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Users
                             </a>
+                            @endif
                             <a class="nav-link" href="tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables

@@ -37,4 +37,10 @@ Route::group(['middleware'=>['auth'],'prefix'=>'backend', 'as'=>'backend.'],func
     Route::resource('items', App\Http\Controllers\Admin\ItemController::class);
     Route::resource('users',App\Http\Controllers\UserController::class);
 
+    Route::get('orders',[App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{voucherNo}',[App\Http\Controllers\Admin\OrderController::class, 'detail'])->name('orders.detail');
+    Route::put('orders/{voucherNo}', [App\Http\Controllers\Admin\OrderController::class, 'status'])->name('orders.status');
+
+
+
 });
