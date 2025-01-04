@@ -52,6 +52,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Items
                             </a>
+                            <a class="nav-link" href="{{route('backend.orders')}}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Orders
+                            </a>
                             <a class="nav-link" href="{{route('backend.users.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Users

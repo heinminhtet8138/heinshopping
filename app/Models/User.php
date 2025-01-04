@@ -21,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
         'password',
         'role'
     ];
@@ -44,4 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function hasRole($role)
+{
+    // Implement your role-checking logic here
+    // Example: Check if the user's role ID matches the provided role
+    return $this->role_id === $role;
+}
 }

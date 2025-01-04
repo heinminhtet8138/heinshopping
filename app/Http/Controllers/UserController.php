@@ -14,8 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate('10');
-        return view('admin.users.index',compact('users'));
+        
     }
 
     /**
@@ -23,7 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        
     }
 
     /**
@@ -31,11 +30,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        // dd($request);
-        $users = User::create($request->all());
-        $users->password = Hash::make($request->password);
-        $users->save();
-        return redirect()->route('backend.users.index');
+        
     }
 
     /**
